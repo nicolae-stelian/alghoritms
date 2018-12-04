@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+
 class Graph {
     /**
      * Create a V-vertex graph with no edge 
@@ -15,8 +17,30 @@ class Graph {
       this.edges = 0;      
     }
 
-    readFromFile(file) {
+    /**
+     * First line of file is the total numer of verictes 
+     * The second line of file is the number of edges 
+     * 
+     * The next line are the edges separated by space
+     * 
+     * @param {string} file 
+     */
+    static createFromFile(file) {
+        let content = fs.readFileSync(file, 'utf8');
+        let lines = content.split("\n");
+        
+        let vertices = parseInt(lines[0]);
+        let edges = parseInt(lines[1]);
 
+        let graph = new Graph(vertices);
+
+        for (let i = 0; i < edges; i += 1) {
+            let line = lines[i + 2];
+            let parts = line.split(' ');
+            graph.addEdge(parseInt(parts[0]), parseInt(parts[1]));
+        }
+        
+        return graph;
     }
 
     /**
