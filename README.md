@@ -6,3 +6,6 @@ Undirected graphs:
     * read a graph from a file 
     * represent graph as adjacent lists
 
+
+Generate graph using graphviz
+circo -Tpng  graph.txt -o test.png
