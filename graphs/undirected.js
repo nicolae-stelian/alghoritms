@@ -46,6 +46,5 @@ console.log("Is connected 3 with 8: " + cc.isConnected(3, 8));
 console.log("Is connected 7 with 8: " + cc.isConnected(7, 8));
 
 // Have graph cycle 
-console.log("\n Detect cycle");
 let cycle = new Cycle(graph);
-console.log("Have graph cycle? " + cycle.haveCycle());
+console.log("\nHave graph cycle? " + cycle.haveCycle());
