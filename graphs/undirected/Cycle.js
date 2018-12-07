@@ -25,9 +25,15 @@ class Cycle {
            if (this.marked[w] === false) {
                this.marked[w] = true;
                this.dfs(w, v);
-           } else if(w != u) {
-                this.hasCycle = true;
+           } else {
+               console.log(v, u, "dif", w);
+               if (u != w) {
+                   this.hasCycle = true;
+                   console.log('true');
+               }
            }
+           
+           console.log("ST");
        }
     }
 
