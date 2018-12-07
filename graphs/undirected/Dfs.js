@@ -5,6 +5,12 @@ class DFS {
     constructor(graph) {
         this.graph = graph;
         this.resetMarked();
+        this.resetEdgeTo();
+    }
+
+    resetEdgeTo() {
+        // used to reconstruct the path from the source 
+        this.edgeTo = [];
     }
 
     resetMarked() {
@@ -18,18 +24,40 @@ class DFS {
     }
 
     /**
-     * 
+     * Use indentation for nice printing the recursion
      * @param {int} source 
+     * * @param {string} indentation
      */
-    dfs(source) {
+    dfs(source, indentation) {
+        if (!indentation) { 
+            indentation = '';        
+        }
+        
+        console.log(indentation + "visit: " + source);
+        indentation += "  ";
+
         // dfs 
         this.marked[source] = true;
-        console.log("Visiting the vertex: " + source);
         for (let v of this.graph.adj(source)) {
-            if (this.marked[v] === false) this.dfs(v);  
+            if (this.marked[v] === false) {
+                this.edgeTo[v] = source;
+                this.dfs(v, indentation);  
+            } else {
+                // back edge, cycle
+            }
         }
     }
 
+    pathTo(dst) {
+        // no path exist if is not marked
+        if (!this.marked[dst]) return false;
+        let path = dst;
+        while (this.edgeTo[dst] != undefined) {
+            path += ' ' + this.edgeTo[dst];
+            dst = this.edgeTo[dst];
+        }
+        return path;
+    }
 }
 
 module.exports = DFS
