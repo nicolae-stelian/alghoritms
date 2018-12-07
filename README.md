@@ -7,3 +7,7 @@ Undirected graphs:
     * represent graph as adjacent lists
 
 The input txt file are located in graphs/input. 
+```
+    cd graphs;
+    nodejs undirected.js input/graph_1.txt
+```

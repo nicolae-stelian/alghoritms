@@ -1,8 +1,8 @@
 'use strict';
 /**
- * Depth first search 
+ * breadth-fist search
  */
-class DFS {
+class BFS {
     
     constructor(graph) {
         this.graph = graph;
@@ -30,22 +30,27 @@ class DFS {
      * @param {int} source 
      * * @param {string} indentation
      */
-    dfs(source, indentation) {
-        if (!indentation) { 
-            indentation = '';        
-        }
-        
-        console.log(indentation + "visit: " + source);
-        indentation += "  ";
-
-        // dfs 
+    bfs(source) {
+        // the array in javascript can be queue or stack 
+        // for queue use function push and shift 
+        // for stack use function push and pop
+        // this case, we use queue 
+        let queue = [];
+        queue.push(source);
         this.marked[source] = true;
-        for (let v of this.graph.adj(source)) {
-            if (this.marked[v] === false) {
-                this.edgeTo[v] = source;
-                this.dfs(v, indentation);  
-            } else {
-                // back edge, cycle
+        console.log("push to queue " + source);
+
+        // queue not empty 
+        while (queue.length > 0) {
+            let v = queue.shift();
+            console.log("process " + v);
+            for (let w of this.graph.adj(v)) {
+                if (this.marked[w] === false) { // not visited
+                    console.log("  push to queue " + w);
+                    queue.push(w);
+                    this.edgeTo[w] = v;
+                    this.marked[w] = true;
+                }
             }
         }
     }
@@ -62,4 +67,4 @@ class DFS {
     }
 }
 
-module.exports = DFS
+module.exports = BFS
