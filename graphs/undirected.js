@@ -5,6 +5,7 @@ let DFS = require("./undirected/Dfs");
 let BFS = require("./undirected/Bfs");
 let CC = require("./undirected/Cc");
 let Cycle = require("./undirected/Cycle");
+let TwoColors = require("./undirected/TwoColors");
  
 if (process.argv.length <= 2) {
     console.log("Usage: undirected.js graph.txt ");
@@ -48,3 +49,8 @@ console.log("Is connected 7 with 8: " + cc.isConnected(7, 8));
 // Have graph cycle 
 let cycle = new Cycle(graph);
 console.log("\nHave graph cycle? " + cycle.haveCycle());
+
+
+// Is bipartide
+let twoColors = new TwoColors(graph);
+console.log("\nIs bipartide? " + twoColors.isBipartide());
