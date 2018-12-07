@@ -8,6 +8,6 @@ Undirected graphs:
 
 The input txt file are located in graphs/input. 
 ```
-nodejs graphs/undirected.js graphs/input/graph_2.txt
-nodejs graphs/undirected.js graphs/input/graph_1.txt
+    nodejs graphs/undirected.js graphs/input/graph_2.txt
+    nodejs graphs/undirected.js graphs/input/graph_1.txt
 ```

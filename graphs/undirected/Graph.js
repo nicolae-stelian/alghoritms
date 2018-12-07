@@ -81,6 +81,10 @@ class Graph {
 
     // undirected graph
     addEdge(v, w) {
+        // if (v == w) {
+        //     console.log("No self edge are accepted ")
+        //     return ;
+        // }
         this.adj(v).push(w);
         this.adj(w).push(v);
         this.edges += 1;
