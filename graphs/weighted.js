@@ -1,8 +1,8 @@
 'use strict';
 
 let WeightedDigraph = require("./weighted/src/WeightedDigraph");
-
 let Dijkstra = require("./weighted/src/Dijkstra");
+let BellmanFord = require("./weighted/src/BellmanFord");
 
 ////////// some test for priority queue, @todo move to another file 
 // let IndexMinPq = require("./weighted/src/IndexMinPq");
@@ -40,15 +40,27 @@ let file = process.argv[2];
 
 console.log('Reading from file. The graph is:');
 let graph = WeightedDigraph.createFromFile(file);
+let source = 0;
+
 // print the graph
 console.log(graph.toString());
 
-let source = 0;
+console.log("\nRun belman ford algorithm");
+let bellmanFord = new BellmanFord(graph, source);
+if (bellmanFord.hasNegativeCycle) {
+    console.log(bellmanFord);
+    console.log("The graph has negativ cycle");
+    return;
+}
+console.log(bellmanFord);
+
+
+console.log("\nRun dijkstra .. if negative ccyle(graph_2.txt) exists then run to infinit");
 let dijkstra = new Dijkstra(graph, 0);
 
 // print distances:
 console.log("Distances from 0: \n");
 console.log(dijkstra.printDistances());
 
-
+console.log("bellman ford algorithm all shortest paths");
 
