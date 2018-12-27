@@ -14,26 +14,38 @@ class IndexMinPq {
         return this.size <= 0;
     }
 
-    delMin() {
+    delMin(log) {
+        this.log = log;
+
         if (this.size <= 0) {
             return false;
         }
         
-            console.log("here", this);
-        
         let minIdx = 0;
-        let value = this.heap[minIdx];
-                
-        let index = this.exists.indexOf(value.edge.from());
+        let minValue = this.heap[minIdx];
+        // remove from exists 
+        let index = this.exists.indexOf(minValue.edge.from());
         this.exists.splice(index, 1);
-        
-        this.sink(minIdx);
-        this.size -= 1;
 
-        return value.edge;
+        if (this.log) {
+            console.log("before", this);
+        }
+
+        // swap first with the last 
+        this.swap(minIdx, this.size - 1);
+        if (this.log) {
+            console.log("after", this);
+        }
+                
+        // delete last 
+        this.heap.splice(this.size - 1, 1);
+
+        this.size -= 1;
+        this.sink(minIdx);
+
+        return minValue.edge;
     }
     
-
     contains(w) {
         return this.exists.indexOf(w) !== -1;
     }
@@ -81,11 +93,16 @@ class IndexMinPq {
             return;
         }
 
+        // nothing to do, the heap is correct.
+        if (this.less(idx, left) && this.less(idx, right)) {
+            return;
+        }
+
         if (this.less(left, right)) { // promote left to the index
-            this.heap[idx] = this.heap[left];
+            this.swap(idx, left);
             this.sink(left);
         } else { // promote the right to the index
-            this.heap[idx] = this.heap[right];
+            this.swap(idx, right);
             this.sink(right);
         }
     }
