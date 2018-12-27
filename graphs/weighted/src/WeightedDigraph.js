@@ -1,7 +1,7 @@
 'use strict';
 
-var fs = require('fs');
-var WeightedEdge = require("./WeightedEdge");
+let fs = require('fs');
+let WeightedEdge = require("./WeightedEdge");
 
 class WeightedDigraph {
     /**

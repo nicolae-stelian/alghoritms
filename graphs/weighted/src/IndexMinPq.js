@@ -14,8 +14,7 @@ class IndexMinPq {
         return this.size <= 0;
     }
 
-    delMin(log) {
-        this.log = log;
+    delMin() {
 
         if (this.size <= 0) {
             return false;
@@ -24,18 +23,11 @@ class IndexMinPq {
         let minIdx = 0;
         let minValue = this.heap[minIdx];
         // remove from exists 
-        let index = this.exists.indexOf(minValue.edge.from());
+        let index = this.exists.indexOf(minValue.edge);
         this.exists.splice(index, 1);
-
-        if (this.log) {
-            console.log("before", this);
-        }
 
         // swap first with the last 
         this.swap(minIdx, this.size - 1);
-        if (this.log) {
-            console.log("after", this);
-        }
                 
         // delete last 
         this.heap.splice(this.size - 1, 1);
@@ -46,21 +38,40 @@ class IndexMinPq {
         return minValue.edge;
     }
     
-    contains(w) {
-        return this.exists.indexOf(w) !== -1;
+    contains(v) {
+        return this.exists.indexOf(v) !== -1;
     }
     
-    change(node, newPriority) {
+    change(v, newPriority) {
+        // not exists, use insert 
+        if (!this.contains(v)) return false;
+        
+        let idx = -1;
+        let i = 0;
+        // linear search O(n) can be improved in O(log(n)) binary search
+        for (let w of this.heap) {
+            if (w.edge == v) {
+                idx = i;
+            }
+            i += 1;
+        }
+        if (idx < 0) return;
 
+        this.heap[idx].priority = newPriority;
+        let parent = this.parent(idx);
+        if (this.less(idx, parent)) { // swim idx if is less than parent
+            this.swim(idx);
+        } else {
+            this.sink(idx);
+        } 
     }
 
-    insert(edge, priority) {
-        
+    insert(v, priority) { 
         // already exists in heap the edge
-        if (this.contains(edge.from())) return false;
+        if (this.contains(v)) return false;
 
-        this.exists.push(edge.from());
-        this.heap.push({'edge': edge, 'priority': priority});
+        this.exists.push(v);
+        this.heap.push({'edge': v, 'priority': priority});
         this.size += 1;
         // bubble data until heap condition is restored
         this.swim(this.size - 1);
