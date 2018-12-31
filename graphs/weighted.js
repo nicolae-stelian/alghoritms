@@ -31,12 +31,13 @@ let BellmanFord = require("./weighted/src/BellmanFord");
 ////////// end test priority queue 
 
 
-if (process.argv.length <= 2) {
-    console.log("Usage: undirected.js graph.txt ");
-    process.exit(-1);
-}
+// if (process.argv.length <= 2) {
+//     console.log("Usage: undirected.js graph.txt ");
+//     process.exit(-1);
+// }
+// let file = process.argv[2];
 
-let file = process.argv[2];
+let file = "graphs/weighted/input/graph_1.txt";
 
 console.log('Reading from file. The graph is:');
 let graph = WeightedDigraph.createFromFile(file);
