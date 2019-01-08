@@ -22,9 +22,7 @@ class BellmanFord {
             this.queue.splice(0, 1);
             this.onQ[v] = false;
             this.relax(v);
-            console.log("end relax ", v);
         }
-        console.log("end");
     }
 
     relax(v) {
@@ -44,16 +42,45 @@ class BellmanFord {
                 }
             }
 
-
-            if (this.cost % (this.graph.totalVertices + 1) === 0) {
+            if (this.cost % (this.graph.totalVertices + 50000) === 0) {
                 this.hasNegativeCycle = true;
             }
         }
     }
 
+    getMin() {
+        if (this.hasNegativeCycle) {
+            return null;
+        }
+
+        return this.distTo.reduce((acc, value) => {
+            if (value === undefined || value === null) {
+                return acc;
+            }
+            if (value < acc) return value;
+
+            return acc;
+        }, 0);
+    }
+
     printDistances() {
+        if (this.hasNegativeCycle) {
+            return "negative cycle";
+        }
+        let s = "";
+
+        let min  = this.distTo.reduce((acc, value) => {
+            if (value === undefined || value === null) {
+                return acc;
+            }
+            if (value < acc) return value;
+
+            return acc;
+        }, 0);
+        s += "\n Min: " + min + "\n";
+        return s;
     }
     
 }
 
-module.exports = BellmanFord
+module.exports = BellmanFord;

@@ -49,4 +49,4 @@ class Dijkstra {
     
 }
 
-module.exports = Dijkstra
+module.exports = Dijkstra;
