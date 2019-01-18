@@ -75,6 +75,10 @@ class Digraph {
         this.edges += 1;
     }
 
+    getVertices() {
+        return this.vertices;
+    }
+
     reverse() {
         let g = new Digraph();
         for (let v of this.vertices) {
@@ -100,6 +104,18 @@ class Digraph {
             s += "\n";
         }
         return s;
+    }
+
+    dfs(v, visited, stack) {
+        visited[v] = true;
+        for (let w of this.adj[v]) {
+            if (!visited[w]) {
+                this.dfs(w, visited, stack);
+            }
+        }
+        if (stack.indexOf(v) === -1) {
+            stack.push(v);
+        }
     }
 }
 
