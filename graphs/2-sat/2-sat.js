@@ -1,44 +1,49 @@
 
 let Digraph = require("./src/Digraph");
 
-let graph = Digraph.createFromFile('graphs/2-sat/input/input-0.txt');
+console.log("start");
+console.log("create graph");
+let graph = Digraph.createFromFile(__dirname + '/input/2sat2.txt');
+
+console.log("create graph transpose");
 let transpose = graph.reverse();
 
 let stack = [];
 let visited = [];
-
+console.log("calculate transpose stack");
 for (let v of transpose.getVertices()) {
     if (!visited[v]) {
-        console.log("starting", v);
         transpose.dfs(v, visited, stack);
     }
 }
 
-
-
-// console.log("uniion find");
+console.log("calculate union find");
 
 visited = [];
-let uf = [];
-
+let uf = new Map();
 for (let i = stack.length - 1; i >= 0; i--) {
     let v = stack[i];
 
     if (!visited[v]) {
+        let leader = v;
         let tStack = [];
         graph.dfs(v, visited, tStack);
-
-        console.log("the same sccs: " + v);
         for(let w of tStack) {
-            console.log(w);
-            uf[w] = v
+            uf.set(w, leader);
         }
     }
 }
 
-console.log("uf");
-uf.forEach(function(k, v) { console.log(k, v);});
-
+for (let i = 0; i < graph.vertices.length; i += 1) {
+    let v = graph.vertices[i];
+    if (uf.has(v) && uf.has(-v)) {
+        if (uf.get(v) === uf.get(-v)) {
+            console.log("false");
+            return;
+        }
+    }
+}
+console.log("true");
 
 
 

@@ -31,6 +31,7 @@ class Digraph {
 
             let a = parseInt(parts[0]);
             let b = parseInt(parts[1]);
+
             // https://www.geeksforgeeks.org/2-satisfiability-2-sat-problem/
             // for every clause (A v B) we add 2 edges: notA -> B and notB -> A
             graph.addEdge(-a, b);
